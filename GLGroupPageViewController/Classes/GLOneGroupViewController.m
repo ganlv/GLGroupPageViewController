@@ -8,12 +8,11 @@
 
 #import "GLOneGroupViewController.h"
 
-
-
 @interface GLOneGroupViewController ()
 {
     NSInteger _leftCount;
     NSInteger _rightCount;
+    NSMutableArray *_colors;
 }
 @end
 
@@ -32,32 +31,52 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    GLOneGroupView *oneGroupView =[[GLOneGroupView alloc] initWithFrame:self.view.bounds];
-    oneGroupView.dataSource = self;
-    [self.view addSubview:oneGroupView];
+    _colors = [[NSMutableArray alloc] init];
+    for (int j=0; j<10; j++) {
+        NSMutableArray *second = [[NSMutableArray alloc] init];
+        for (int i=0; i< 4; i++) {
+            CGFloat red  = arc4random()%255/255.0;
+            CGFloat blue = arc4random()%255/255.0;
+            CGFloat green = arc4random()%255/255.0;
+            [second addObject:[UIColor colorWithRed:red green:green blue:blue alpha:1]];
+        }
+        [_colors addObject:second];
+    }
+    
+    GLPageCardView *pageCardView = [[GLPageCardView alloc] initWithFrame:self.view.bounds];
+    pageCardView.dataSource = self;
+    pageCardView.delegate  = self;
+    [self.view addSubview:pageCardView];
+    [pageCardView reloadData];
 }
 
-#pragma mark data source 
--(GLPageView*)oneGroupView:(GLOneGroupView *)groupView nextView:(GLPageView *)pageView
+#pragma mark data source
+-(NSInteger)numberOfPageCard:(GLPageCardView *)pageCardView
 {
-    GLPageView *nextPageView = [[GLPageView alloc] init];
-    nextPageView.layer.cornerRadius = 10.0;
-    CGFloat red  = arc4random()%255/255.0;
-    CGFloat blue = arc4random()%255/255.0;
-    CGFloat green = arc4random()%255/255.0;
-    nextPageView.backgroundColor = [UIColor colorWithRed:red green:green blue:blue alpha:1];
-    return nextPageView;
+    return [_colors count];
 }
 
--(GLPageView*)oneGroupView:(GLOneGroupView *)groupView preView:(GLPageView *)pageView
+-(NSInteger)pageCardView:(GLPageCardView *)pageCardView numberOfCardInPage:(NSInteger)page
 {
-    GLPageView *prePageView = [[GLPageView alloc] init];
-    prePageView.layer.cornerRadius = 10.0;
-    CGFloat red  = arc4random()%255/255.0;
-    CGFloat blue = arc4random()%255/255.0;
-    CGFloat green = arc4random()%255/255.0;
-    prePageView.backgroundColor = [UIColor colorWithRed:red green:green blue:blue alpha:1];
-    return prePageView;
+    return  [[_colors objectAtIndex:page] count];
+}
+
+-(GLCardView*)pageCardView:(GLPageCardView *)pageCardView cardOfIndex:(NSIndexPath *)index
+{
+    GLCardView *nextCard = [pageCardView dequeueReuableCard];
+    if(nextCard == nil){
+        nextCard= [[GLCardView alloc] init];
+        nextCard.layer.cornerRadius = 10.0;
+    }
+    UIColor *color = [[_colors objectAtIndex:index.page] objectAtIndex:index.card];
+    nextCard.backgroundColor = color;
+    [nextCard setThisIndex:[NSString stringWithFormat:@"page:%ld,card:%ld",index.page,index.card]];
+    return nextCard;
+}
+
+-(NSString*)pageCardView:(GLPageCardView *)pageCardView titleOfPage:(NSInteger)page
+{
+    return [NSString stringWithFormat:@"title:%ld",(long)page];
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,7 +84,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+#pragma mark scroll view delegate
 /*
 #pragma mark - Navigation
 

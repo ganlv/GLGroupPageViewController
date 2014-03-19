@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "GLOneGroupView.h"
+#import "GLPageCardView.h"
 
-@interface GLOneGroupViewController : UIViewController<GLOneGroupDataSource>
+@interface GLOneGroupViewController : UIViewController<GLPageCardViewDataSource,GLPageCardViewDelegate>
+
+@property (nonatomic,retain) GLPageCardView *pageCardView;
 
 @end
