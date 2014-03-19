@@ -52,6 +52,9 @@
 // Gets the current view.
 - (GLOnePageView *)currentPage;
 
+
+-(void)scrollToPage:(NSInteger)index;
+
 // Reloads everything from scratch.
 - (void)reloadData;
 
