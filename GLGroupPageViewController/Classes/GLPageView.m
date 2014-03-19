@@ -127,6 +127,12 @@
     self.pageIndex = [self firstPageIndex];
     self.currentPageIndex = [self firstPageIndex];
 }
+#pragma mark public method 
+-(void)scrollToPage:(NSInteger)index
+{
+    CGPoint offset =  [self contentOffsetForIndex:index];
+    [self setContentOffset:offset animated:YES];
+}
 
 #pragma mark - Convenient methods
 
@@ -369,6 +375,11 @@
 
 #pragma mark - Content offset
 
+-(CGPoint)contentOffsetForIndex:(NSInteger)index
+{
+    return CGPointMake(index*[self pageWidth], 0);
+}
+
 - (CGFloat)minContentOffsetX
 {
     return [self centerContentOffsetX] - [self distanceFromCenterOffsetX];
@@ -376,19 +387,7 @@
 
 - (CGFloat)centerContentOffsetX
 {
-    if (![self shouldScrollingWrapDataSource] && [self isFirstPage]) {
-        return 0;
-    }
-    if(![self shouldScrollingWrapDataSource] && [self isSecondPage]){
-        return [self pageWidth];
-    }
-    if(![self shouldScrollingWrapDataSource] && [self isLastSecondPage]){
-        return [self pageWidth]*3;
-    }
-    if(![self shouldScrollingWrapDataSource] && [self isLastPage]){
-        return [self pageWidth]*4;
-    }
-    return [self pageWidth]*2;
+    return [self pageWidth]*[self currentPageIndex];
 }
 
 - (CGFloat)maxContentOffsetX
@@ -403,11 +402,7 @@
 
 - (CGFloat)contentSizeWidth
 {
-    if([self numberOfPages] > 5){
-        return [self pageWidth] * 5.0f;
-    }else{
-        return [self pageWidth] * [self numberOfPages];
-    }
+    return [self pageWidth] * [self numberOfPages];
 }
 
 #pragma mark - Layout
@@ -488,35 +483,79 @@
     [super layoutSubviews];
     
     if ([self isScrollNecessary]) {
-        [self recenterContent];
-        [self tileViews];//add or remove views
+        [self reshowContent];
     } else {
         [self recenterCurrentView];
         [self updateNumberOfPages];
     }
 }
 
-- (void)recenterContent
+-(void)reshowContent
 {
     CGPoint currentContentOffset = [self contentOffset];
     CGFloat tranlation = currentContentOffset.x - [self centerContentOffsetX];
     [self translation:tranlation]; //translation delegate
+
+    NSArray *neededIndexs = [self needShowIndexs];
     
-    CGFloat distanceFromCenterOffsetX = fabs(currentContentOffset.x - [self centerContentOffsetX]);
+    NSMutableArray *_bakVisibleIndexes = [[NSMutableArray alloc] init];
+    NSMutableArray *_bakPages = [[NSMutableArray alloc] init];
     
-    if (distanceFromCenterOffsetX  >= [self distanceFromCenterOffsetX]) {
-        if (currentContentOffset.x <= [self minContentOffsetX]) {
-            [self previous];
-            [self didScrollToPreviousPage];
-        } else if (currentContentOffset.x >= [self maxContentOffsetX]) {
-            [self next];
-            [self didScrollToNextPage];
+    for (NSNumber *needIndexNumber in neededIndexs ) {
+        NSUInteger foundIndex =[_visibleIndices indexOfObject:needIndexNumber];
+        
+        NSInteger neededIndex = [needIndexNumber integerValue];
+        //for
+        GLOnePageView *page =  [self pageAtIndex:neededIndex];
+        if(foundIndex  == NSNotFound){
+            CGPoint point = [self contentOffsetForIndex:neededIndex];
+            [self placePage:page atPoint:point.x];
         }
         
-        [self updateNumberOfPages];
-        [self resetVisiblePages];
-        [self recenterCurrentView];
+        [_bakVisibleIndexes addObject:needIndexNumber];
+        [_bakPages addObject:page];
     }
+    
+    NSInteger pageIndex = 0;
+    for (NSNumber *preVisibleIndex in _visibleIndices) {
+        NSUInteger nowVisibleFoundIndex = [_bakVisibleIndexes indexOfObject:preVisibleIndex];
+        if(nowVisibleFoundIndex == NSNotFound){
+            GLOnePageView *page = [_visiblePages objectAtIndex:pageIndex];
+            [page removeFromSuperview];
+            [_reusablePages addObject:page];
+        }
+        pageIndex ++;
+    }
+    //for transform data
+    [_visiblePages removeAllObjects];
+    [_visibleIndices removeAllObjects];
+    
+    [_visibleIndices addObjectsFromArray:_bakVisibleIndexes];
+    [_visiblePages addObjectsFromArray:_bakPages];
+}
+
+
+
+-(NSArray*)needShowIndexs
+{
+    CGFloat contentOffsetX = self.contentOffset.x;
+    NSInteger needShowPage = contentOffsetX / [self pageWidth];
+    NSInteger overMuch = (long)contentOffsetX % (long)[self pageWidth];//对于current page的溢出值是多少?
+    
+    NSInteger willBeCurrentPage  = needShowPage;
+    if(overMuch < [self pageWidth]/2  && willBeCurrentPage!=[self currentPageIndex]){
+        self.currentPageIndex = willBeCurrentPage;
+        [self didScrollToPage];
+    }
+    NSMutableArray *needShowPageIndexs= [[NSMutableArray alloc] init];
+    for(NSInteger needIndex = needShowPage -1 ; needIndex <=needShowPage + 1; needIndex++){
+        if(needIndex >= [self firstPageIndex] && needIndex<=[self lastPageIndex]){
+            NSNumber *number =  [NSNumber numberWithInteger:needIndex];
+            [needShowPageIndexs addObject:number];
+        }
+    }
+    
+    return needShowPageIndexs;
 }
 
 #pragma mark - Pages tiling
@@ -555,10 +594,21 @@
     return CGRectGetMinX(frame);
 }
 
+-(BOOL)needAddNextView
+{
+    NSInteger pageSize = 2;
+    return  [self lastVisiblePageIndex] < [self lastPageIndex] && ( [self lastVisiblePageIndex]<[self currentPageIndex]+pageSize || [self currentPageIndex] >= [self lastVisiblePageIndex]-pageSize);
+}
+-(BOOL)needAddPreviouseView
+{
+    NSInteger pageSize = 2;
+    return [self firstVisiblePageIndex] > [self firstPageIndex] &&( [self firstVisiblePageIndex] > [self currentPageIndex]-pageSize || [self currentPageIndex] <= pageSize );
+}
+
 - (void)tileViews
 {
     NSInteger pageSize = 2;
-    while ([self lastVisiblePageIndex] < [self lastPageIndex] && ( [self lastVisiblePageIndex]<[self currentPageIndex]+pageSize || [self currentPageIndex] >= [self lastVisiblePageIndex]-pageSize) ) {
+    while ( [self needAddNextView] ) {
         CGFloat rightEdge = CGRectGetMaxX([self lastVisiblePage].frame);
         [self placePage:[self nextLastPage] onRight:rightEdge];
         if([_visiblePages count] > 2*pageSize + 1){
@@ -566,7 +616,7 @@
         }
     }
  
-    while ([self firstVisiblePageIndex] > [self firstPageIndex] &&( [self firstVisiblePageIndex] > [self currentPageIndex]-pageSize || [self currentPageIndex] <= pageSize ) ) {
+    while ([self needAddPreviouseView]) {
         CGFloat leftEdge = CGRectGetMinX([self firstVisiblePage].frame);
         [self placePage:[self previousFirstPage] onLeft:leftEdge];
         if([_visiblePages count] > 2*pageSize + 1){
@@ -601,19 +651,11 @@
     }
 }
 
-- (void)didScrollToNextPage
+- (void)didScrollToPage
 {
     if (self.pageViewDelegate &&
-        [self.pageViewDelegate respondsToSelector:@selector(pageViewDidScrollNextPage:)]) {
-        [self.pageViewDelegate pageViewDidScrollNextPage:self];
-    }
-}
-
-- (void)didScrollToPreviousPage
-{
-    if (self.pageViewDelegate &&
-        [self.pageViewDelegate respondsToSelector:@selector(pageViewDidScrollPreviousPage:)]) {
-        [self.pageViewDelegate pageViewDidScrollPreviousPage:self];
+        [self.pageViewDelegate respondsToSelector:@selector(pageViewDidScrollToPage:)]) {
+        [self.pageViewDelegate pageViewDidScrollToPage:self];
     }
 }
 

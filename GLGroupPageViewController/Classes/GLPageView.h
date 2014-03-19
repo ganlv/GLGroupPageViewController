@@ -91,10 +91,7 @@
 @optional
 
 // Called when the GBInfiniteScrollView has scrolled to next page.
-- (void)pageViewDidScrollNextPage:(GLPageView *)pageView;
-
-// Called when the GBInfiniteScrollView has scrolled to previous page.
-- (void)pageViewDidScrollPreviousPage:(GLPageView *)pageView;
+- (void)pageViewDidScrollToPage:(GLPageView *)pageView;
 
 //show this card
 -(void)pageView:(GLPageView*)pageView didShowCard:(NSIndexPath*)index;

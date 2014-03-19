@@ -28,7 +28,7 @@
         [self addSubview:label];
         
         UIButton *button =[UIButton buttonWithType:UIButtonTypeCustom];
-        [button setTitle:@"按钮" forState:UIControlStateNormal];
+        [button setTitle:@"Button" forState:UIControlStateNormal];
         [button setFrame:CGRectMake(20, 80, 200, 200)];
         [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
         [self addSubview:button];

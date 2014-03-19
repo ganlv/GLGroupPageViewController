@@ -180,8 +180,8 @@
 			isa = PBXGroup;
 			children = (
 				E676734118D054420063559F /* Classes */,
-				E6EDA6B418D937F800D533C5 /* GLPageCardViewController.m */,
 				E6EDA6B518D937F800D533C5 /* GLPageCardViewController.h */,
+				E6EDA6B418D937F800D533C5 /* GLPageCardViewController.m */,
 				E676731B18D054100063559F /* GLAppDelegate.h */,
 				E676731C18D054100063559F /* GLAppDelegate.m */,
 				E676731E18D054100063559F /* Main.storyboard */,

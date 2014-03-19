@@ -52,6 +52,10 @@
     [_titleBar setTitle:firstViewTitle];
 }
 
+-(void)scrollToPage:(NSInteger)page
+{
+    [_pageView scrollToPage:page];
+}
 #pragma mark for page current index
 -(NSMutableDictionary*)cardCurrentIndexs
 {
@@ -155,19 +159,8 @@
     }
     [_titleBar fromRightTransferTitle:title progress:progress];
 }
-// Called when the GBInfiniteScrollView has scrolled to next page.
-- (void)pageViewDidScrollNextPage:(GLPageView *)pageView
-{
-    [self didScrollToPage:pageView];
-}
 
-// Called when the GBInfiniteScrollView has scrolled to previous page.
-- (void)pageViewDidScrollPreviousPage:(GLPageView *)pageView
-{
-    [self didScrollToPage:pageView];
-}
-
--(void)didScrollToPage:(GLPageView*)pageView
+-(void)pageViewDidScrollToPage:(GLPageView*)pageView
 {
     NSInteger pageIndex = [pageView currentPageIndex];
     _currentPage = pageIndex;

@@ -21,6 +21,8 @@
 
 -(void)reloadData;
 
+-(void)scrollToPage:(NSInteger)page;
+
 -(GLCardView*)dequeueReuableCard;
 
 @end

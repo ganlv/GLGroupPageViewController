@@ -13,6 +13,7 @@
     NSInteger _leftCount;
     NSInteger _rightCount;
     NSMutableArray *_colors;
+    GLPageCardView *_pageCardView;
 }
 @end
 
@@ -32,7 +33,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     _colors = [[NSMutableArray alloc] init];
-    for (int j=0; j<10; j++) {
+    for (int j=0; j<100; j++) {
         NSMutableArray *second = [[NSMutableArray alloc] init];
         for (int i=0; i< 4; i++) {
             CGFloat red  = arc4random()%255/255.0;
@@ -43,11 +44,35 @@
         [_colors addObject:second];
     }
     
-    GLPageCardView *pageCardView = [[GLPageCardView alloc] initWithFrame:self.view.bounds];
-    pageCardView.dataSource = self;
-    pageCardView.delegate  = self;
-    [self.view addSubview:pageCardView];
-    [pageCardView reloadData];
+    _pageCardView = [[GLPageCardView alloc] initWithFrame:self.view.bounds];
+    _pageCardView.dataSource = self;
+    _pageCardView.delegate  = self;
+    [self.view addSubview:_pageCardView];
+    [_pageCardView reloadData];
+    
+    
+    
+    UIButton *fbutton = [UIButton buttonWithType:UIButtonTypeCustom];
+    fbutton.frame= CGRectMake(0, self.view.frame.size.height - 80, 100, 40);
+    [fbutton setTitle:@"First Day" forState:UIControlStateNormal];
+    [fbutton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [fbutton addTarget:self action:@selector(goFirstDay) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:fbutton];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame= CGRectMake(200, self.view.frame.size.height - 80, 100, 40);
+    [button setTitle:@"Today" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(goToday) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:button];
+}
+-(void)goFirstDay
+{
+    [_pageCardView scrollToPage:0];
+}
+-(void)goToday
+{
+    [_pageCardView scrollToPage:([_colors count] - 1)];
 }
 
 #pragma mark data source
@@ -70,7 +95,7 @@
     }
     UIColor *color = [[_colors objectAtIndex:index.page] objectAtIndex:index.card];
     nextCard.backgroundColor = color;
-    [nextCard setThisIndex:[NSString stringWithFormat:@"page:%ld,card:%ld",index.page,index.card]];
+    [nextCard setThisIndex:[NSString stringWithFormat:@"page:%ld,card:%ld",(long)index.page,(long)index.card]];
     return nextCard;
 }
 

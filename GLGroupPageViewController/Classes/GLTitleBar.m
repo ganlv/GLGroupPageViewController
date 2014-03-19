@@ -77,7 +77,6 @@
         innerView = _backTitle;
     }
     [UIView animateWithDuration:0.1 animations:^{
-        NSLog(@"progress:%f",progress);
         outView.transform =CGAffineTransformMakeTranslation(-[self totalTranslationDistance]*(1-progress), 0);
         outView.alpha = progress;
         outView.text = title;

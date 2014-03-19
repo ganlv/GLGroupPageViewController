@@ -125,7 +125,6 @@ typedef NS_OPTIONS(NSUInteger,GLPanDirection){
         [_cardArray insertObject:pageView atIndex:0];
         [_visibleIndexs insertObject:[NSNumber numberWithInteger:preIndex] atIndex:0];
         preIndex--;
-        NSLog(@"pageView frame:%@",[NSValue valueWithCGRect:pageView.frame]);
     }
     [self transformCardViews];
 }
