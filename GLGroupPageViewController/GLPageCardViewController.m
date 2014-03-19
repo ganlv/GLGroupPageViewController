@@ -6,9 +6,9 @@
 //  Copyright (c) 2014年 ganlvji. All rights reserved.
 //
 
-#import "GLOneGroupViewController.h"
+#import "GLPageCardViewController.h"
 
-@interface GLOneGroupViewController ()
+@interface GLPageCardViewController ()
 {
     NSInteger _leftCount;
     NSInteger _rightCount;
@@ -16,7 +16,7 @@
 }
 @end
 
-@implementation GLOneGroupViewController
+@implementation GLPageCardViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

@@ -7,7 +7,6 @@
 //
 
 #import "GLOnePageView.h"
-#import "GLOneGroupViewController.h"
 #import <objc/runtime.h>
 
 typedef NS_OPTIONS(NSUInteger,GLPanDirection){

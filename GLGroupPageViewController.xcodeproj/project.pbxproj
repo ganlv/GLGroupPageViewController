@@ -32,17 +32,15 @@
 		E676731918D054100063559F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E676731818D054100063559F /* main.m */; };
 		E676731D18D054100063559F /* GLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E676731C18D054100063559F /* GLAppDelegate.m */; };
 		E676732018D054100063559F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E676731E18D054100063559F /* Main.storyboard */; };
-		E676732318D054100063559F /* GLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E676732218D054100063559F /* GLViewController.m */; };
 		E676732518D054100063559F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E676732418D054100063559F /* Images.xcassets */; };
 		E676732C18D054100063559F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E676732B18D054100063559F /* XCTest.framework */; };
 		E676732D18D054100063559F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E676730C18D054100063559F /* Foundation.framework */; };
 		E676732E18D054100063559F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E676731018D054100063559F /* UIKit.framework */; };
 		E676733618D054100063559F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E676733418D054100063559F /* InfoPlist.strings */; };
 		E676733818D054100063559F /* GLGroupPageViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E676733718D054100063559F /* GLGroupPageViewControllerTests.m */; };
-		E676734718D055F60063559F /* GLOnePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E676734618D055F60063559F /* GLOnePageViewController.m */; };
 		E676734A18D063AB0063559F /* GLCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = E676734918D063AB0063559F /* GLCardView.m */; };
-		E676734D18D0668D0063559F /* GLOneGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E676734C18D0668D0063559F /* GLOneGroupViewController.m */; };
 		E684252718D6F3E80045B588 /* GLTitleBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E684252618D6F3E80045B588 /* GLTitleBar.m */; };
+		E6EDA6B618D937F800D533C5 /* GLPageCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6EDA6B418D937F800D533C5 /* GLPageCardViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,22 +86,18 @@
 		E676731B18D054100063559F /* GLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLAppDelegate.h; sourceTree = "<group>"; };
 		E676731C18D054100063559F /* GLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLAppDelegate.m; sourceTree = "<group>"; };
 		E676731F18D054100063559F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		E676732118D054100063559F /* GLViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLViewController.h; sourceTree = "<group>"; };
-		E676732218D054100063559F /* GLViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLViewController.m; sourceTree = "<group>"; };
 		E676732418D054100063559F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E676732A18D054100063559F /* GLGroupPageViewControllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GLGroupPageViewControllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E676732B18D054100063559F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		E676733318D054100063559F /* GLGroupPageViewControllerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GLGroupPageViewControllerTests-Info.plist"; sourceTree = "<group>"; };
 		E676733518D054100063559F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E676733718D054100063559F /* GLGroupPageViewControllerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLGroupPageViewControllerTests.m; sourceTree = "<group>"; };
-		E676734518D055F60063559F /* GLOnePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLOnePageViewController.h; sourceTree = "<group>"; };
-		E676734618D055F60063559F /* GLOnePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLOnePageViewController.m; sourceTree = "<group>"; };
 		E676734818D063AB0063559F /* GLCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLCardView.h; sourceTree = "<group>"; };
 		E676734918D063AB0063559F /* GLCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLCardView.m; sourceTree = "<group>"; };
-		E676734B18D0668D0063559F /* GLOneGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GLOneGroupViewController.h; path = Classes/GLOneGroupViewController.h; sourceTree = "<group>"; };
-		E676734C18D0668D0063559F /* GLOneGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GLOneGroupViewController.m; path = Classes/GLOneGroupViewController.m; sourceTree = "<group>"; };
 		E684252518D6F3E80045B588 /* GLTitleBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLTitleBar.h; sourceTree = "<group>"; };
 		E684252618D6F3E80045B588 /* GLTitleBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLTitleBar.m; sourceTree = "<group>"; };
+		E6EDA6B418D937F800D533C5 /* GLPageCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLPageCardViewController.m; sourceTree = "<group>"; };
+		E6EDA6B518D937F800D533C5 /* GLPageCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLPageCardViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,15 +180,11 @@
 			isa = PBXGroup;
 			children = (
 				E676734118D054420063559F /* Classes */,
-				E676734B18D0668D0063559F /* GLOneGroupViewController.h */,
-				E676734C18D0668D0063559F /* GLOneGroupViewController.m */,
-				E676734518D055F60063559F /* GLOnePageViewController.h */,
-				E676734618D055F60063559F /* GLOnePageViewController.m */,
+				E6EDA6B418D937F800D533C5 /* GLPageCardViewController.m */,
+				E6EDA6B518D937F800D533C5 /* GLPageCardViewController.h */,
 				E676731B18D054100063559F /* GLAppDelegate.h */,
 				E676731C18D054100063559F /* GLAppDelegate.m */,
 				E676731E18D054100063559F /* Main.storyboard */,
-				E676732118D054100063559F /* GLViewController.h */,
-				E676732218D054100063559F /* GLViewController.m */,
 				E676732418D054100063559F /* Images.xcassets */,
 				E676731318D054100063559F /* Supporting Files */,
 			);
@@ -365,11 +355,9 @@
 				E676731918D054100063559F /* main.m in Sources */,
 				E64E481C18D430E60072F5FA /* GLPageCardView.m in Sources */,
 				E64E481918D42A270072F5FA /* GLPageView.m in Sources */,
-				E676734718D055F60063559F /* GLOnePageViewController.m in Sources */,
 				E676734A18D063AB0063559F /* GLCardView.m in Sources */,
-				E676734D18D0668D0063559F /* GLOneGroupViewController.m in Sources */,
+				E6EDA6B618D937F800D533C5 /* GLPageCardViewController.m in Sources */,
 				E684252718D6F3E80045B588 /* GLTitleBar.m in Sources */,
-				E676732318D054100063559F /* GLViewController.m in Sources */,
 				E676731D18D054100063559F /* GLAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
